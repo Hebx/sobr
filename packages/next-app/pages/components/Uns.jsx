@@ -1,7 +1,7 @@
 import UAuth from "@uauth/js";
 import React, { useEffect, useState } from "react";
-import { Avatar, Button } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { Avatar, Button, Link } from "@chakra-ui/react";
+import Router, { useRouter } from "next/router";
 
 export const injected = {};
 
@@ -14,6 +14,31 @@ export const uauth = new UAuth({
   connectors: {injected, walletconnect }
 });
 
+const Callback = props => {
+  const [navigateTo, setNavigateTo] = useState()
+
+  useEffect(() => {
+    // Try to exchange authorization code for access and id tokens.
+    uauth
+      .loginCallback()
+      // Successfully logged and cached user in `window.localStorage`
+      .then(response => {
+        console.log('loginCallback ->', response)
+        setNavigateTo('/profile')
+      })
+      // Failed to exchange authorization code for token.
+      .catch(error => {
+        console.error('callback error:', error)
+        setNavigateTo('/login?error=' + error.message)
+      })
+  }, [])
+
+  if (navigateTo) {
+    return <Link to={navigateTo} />
+  }
+
+  return <>Loading...</>
+}
 
 function ConnectUNS() {
   const [loading, setLoading] = useState(false);
@@ -71,7 +96,11 @@ function ConnectUNS() {
         <br>
         </br>
         {user.wallet_address}
+    <Router>
+      <Link path='callback' element={<Callback />} />
+    </Router>
       </Button>
+
     );
   }
 
