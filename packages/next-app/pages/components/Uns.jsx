@@ -9,9 +9,9 @@ export const walletconnect = { provider: "walletconnect" }
 
 export const uauth = new UAuth({
   clientID: "ddb368fc-a890-41d2-99cf-75f64cf23f9d",
-  redirectUri: "https://sobr.vercel.app/signin",
+  redirectUri: "https://sobr.vercel.app/callback",
   scope: "openid wallet email:optional humanity_check:optional",
-  // connectors: {injected, walletconnect }
+  connectors: {injected, walletconnect }
 });
 
 
