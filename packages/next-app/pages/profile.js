@@ -10,7 +10,7 @@ import {
     Center
 } from "@chakra-ui/react"
 import { useAccount } from "wagmi"
-import { WorldID } from "./components/WorldID"
+import  WorldID  from "./components/WorldID"
 import Web3Button from "./components/Web3Button"
 import ConnectUNS from "./components/Uns"
 import { useRouter } from "next/router"
