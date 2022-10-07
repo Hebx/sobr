@@ -22,7 +22,7 @@ const widgetProps = {
   onInitError: (error) => console.log("Error while initialization World ID", error),
 };
 
-export function WorldID() {
+export default function WorldID() {
   return (
     <div>
       <header>
