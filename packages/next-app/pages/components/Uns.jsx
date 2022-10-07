@@ -8,42 +8,44 @@ export const injected = {};
 export const walletconnect = { provider: "walletconnect" }
 
 export const uauth = new UAuth({
-  clientID: "ddb368fc-a890-41d2-99cf-75f64cf23f9d",
-  redirectUri: "https://sobr.vercel.app/callback",
-  scope: "openid wallet email:optional humanity_check:optional",
-  connectors: {injected, walletconnect }
+
+    clientID: "ddb368fc-a890-41d2-99cf-75f64cf23f9d",
+    redirectUri: "https://sobr.vercel.app",
+    scope: "openid wallet",
+   connectors: {injected, walletconnect }
 });
 
-const Callback = props => {
-  const [navigateTo, setNavigateTo] = useState()
-
-  useEffect(() => {
-    // Try to exchange authorization code for access and id tokens.
-    uauth
-      .loginCallback()
-      // Successfully logged and cached user in `window.localStorage`
-      .then(response => {
-        console.log('loginCallback ->', response)
-        setNavigateTo('/profile')
-      })
-      // Failed to exchange authorization code for token.
-      .catch(error => {
-        console.error('callback error:', error)
-        setNavigateTo('/login?error=' + error.message)
-      })
-  }, [])
-
-  if (navigateTo) {
-    return <Link to={navigateTo} />
-  }
-
-  return <>Loading...</>
-}
 
 function ConnectUNS() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const [user, setUser] = useState();
+  // const [navigateTo, setNavigateTo] = useState();
+
+
+  // const Callback = () => {
+  //   useEffect(() => {
+  //     // Try to exchange authorization code for access and id tokens.
+  //     uauth
+  //       .loginCallback()
+  //       // Successfully logged and cached user in `window.localStorage`
+  //       .then(response => {
+  //         console.log('loginCallback ->', response)
+  //         setNavigateTo('/profile')
+  //       })
+  //       // Failed to exchange authorization code for token.
+  //       .catch(error => {
+  //         console.error('callback error:', error)
+  //         setNavigateTo('/login?error=' + error.message)
+  //       })
+  //   }, [])
+
+  //   if (navigateTo) {
+  //     return <Link to={navigateTo} />
+  //   }
+
+  //   return <>Loading...</>
+  // }
 
   useEffect(() => {
     setLoading(true);
@@ -96,9 +98,7 @@ function ConnectUNS() {
         <br>
         </br>
         {user.wallet_address}
-    <Router>
-      <Link path='callback' element={<Callback />} />
-    </Router>
+        {/* <Link path='callback' element={<Callback />} /> */}
       </Button>
 
     );
